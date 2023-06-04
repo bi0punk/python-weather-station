@@ -62,8 +62,7 @@ def fetch_sensor_data():
 #Funcion revisa temperatura baja o sube 
 def check_temperature(temperature, limit):
     if temperature < limit:
-        print(f"La temperatura es más baja que {limit} grados")  # Cambia el mensaje según tus necesidades
-
+        print(f"La temperatura es más baja que {limit} grados")
 
 if __name__ == '__main__':
     app.run(debug=True, host="192.168.1.129", port=5000)
