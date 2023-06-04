@@ -19,7 +19,7 @@ def receive_sensor_data():
     if data and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
-        check_temperature(temperature, 18.0)  # Cambia 18.0 por el valor límite que desees
+        check_temperature(temperature, 17.0)  # Cambia 18.0 por el valor límite que desees
         print(data)
         return str(temperature)
     else:
