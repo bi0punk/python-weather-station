@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template
 import datetime
 from db import get_db_connection
+from gtts import gTTS
+import os
+
 
 app = Flask(__name__)
 
@@ -16,7 +19,7 @@ def receive_sensor_data():
     if data and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
-        check_temperature(temperature, 18.0)  # Cambia 18.0 por el valor límite que desees
+        check_temperature(temperature, 21.0)  # Cambia 18.0 por el valor límite que desees
         print(data)
         return str(temperature)
     else:
@@ -46,7 +49,24 @@ def fetch_sensor_data():
 # Función que revisa si la temperatura es más baja que el límite
 def check_temperature(temperature, limit):
     if temperature < limit:
-        print(f"La temperatura es más baja que {limit} grados")
+        text = f"La temperatura es más baja que {limit} grados"
+        text_to_speech(text)
+
+
+
+
+def text_to_speech(text, lang='es'):
+    tts = gTTS(text=text, lang=lang)
+    tts.save("output.mp3")
+    os.system("mpg123 output.mp3")  # Reproduce el archivo de audio generado
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
