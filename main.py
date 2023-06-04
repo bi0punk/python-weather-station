@@ -17,6 +17,7 @@ def receive_sensor_data():
     print()
     print(data)
     
+    
     if data and 'temperature' in data:
         temperature = float(data['temperature'])
 
@@ -29,11 +30,13 @@ def receive_sensor_data():
 
         print("")
 
-        fetch_sensor_data()
+        
     else:
         return 'error'
 
 
+
+#Funcion que guarda la data en la base de datos
 def save_sensor_data(temperature):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -43,6 +46,9 @@ def save_sensor_data(temperature):
     conn.close()
 
 
+
+
+#Busca toda la información de la base de datos
 def fetch_sensor_data():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -52,6 +58,8 @@ def fetch_sensor_data():
     return sensor_data
 
 
+
+#Funcion revisa temperatura baja o sube 
 def check_temperature(temperature, limit):
     if temperature < limit:
         print(f"La temperatura es más baja que {limit} grados")  # Cambia el mensaje según tus necesidades
