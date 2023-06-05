@@ -13,6 +13,12 @@ def get_sensor_data():
     return render_template("index.html")
 
 
+@app.route('/table', methods=['GET'])
+def table_data():
+    return render_template("table.html")
+
+
+
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     data = request.json
