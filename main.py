@@ -27,6 +27,8 @@ def receive_sensor_data():
         save_sensor_data(temperature)
         check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
         print(data)
+
+        fetch_sensor_data()
         return str(temperature)
     else:
         return 'error'
