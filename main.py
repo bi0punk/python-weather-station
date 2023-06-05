@@ -10,12 +10,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def get_sensor_data():
-    return render_template("index.html")
+    return render_template("/home/index.html")
 
 
-@app.route('/table', methods=['GET'])
+@app.route('/table', methods=['GET', 'POST'])
 def table_data():
-    return render_template("table.html")
+    return render_template("/home/table.html")
 
 
 
