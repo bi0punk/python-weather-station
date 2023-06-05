@@ -18,55 +18,46 @@ def table_data():
     return render_template("/home/table.html")
 
 
-
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
-    data = request.json
-    if data and 'temperature' in data:
+    if data := request.json and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
         check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
         print(data)
 
-        fetch_sensor_data()
+        sensor_data = fetch_sensor_data()
         return str(temperature)
     else:
         return 'error'
 
 
-# Función que guarda la data en la base de datos
 def save_sensor_data(temperature):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
-    conn.commit()
-    conn.close()
+    with get_db_connection() as conn:
+        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
+        conn.commit()
 
 
-# Función que busca toda la información de la base de datos
 def fetch_sensor_data():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, temperature, timestamp FROM sensor_data")
-    sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']} for row in cursor.fetchall()]
-    conn.close()
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, temperature, timestamp FROM sensor_data")
+        sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']} for row in cursor.fetchall()]
     return sensor_data
 
 
-# Función que revisa si la temperatura es más baja que el límite
 def check_temperature(temperature, limit):
     if temperature < limit:
-        text = f"temperatura baja detectada,  {limit} grados"
+        text = f"Temperatura baja detectada, {limit} grados"
         text_to_speech(text)
-
-
 
 
 def text_to_speech(text, lang='es'):
     tts = gTTS(text=text, lang=lang)
     tts.save("output.mp3")
-    os.system("output.mp3")  # Reproduce el archivo de audio generado
+    os.system("output.mp3")
 
 
 if __name__ == '__main__':
