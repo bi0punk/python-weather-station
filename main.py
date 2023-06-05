@@ -19,7 +19,7 @@ def receive_sensor_data():
     if data and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
-        check_temperature(temperature, 17.0)  # Cambia 18.0 por el valor límite que desees
+        check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
         print(data)
         return str(temperature)
     else:
@@ -58,7 +58,7 @@ def check_temperature(temperature, limit):
 def text_to_speech(text, lang='es'):
     tts = gTTS(text=text, lang=lang)
     tts.save("output.mp3")
-    os.system("mpg123 output.mp3")  # Reproduce el archivo de audio generado
+    os.system("output.mp3")  # Reproduce el archivo de audio generado
 
 
 if __name__ == '__main__':
