@@ -10,6 +10,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def get_sensor_data():
+    fetch_sensor_data()
+    obtener_temperatura_fecha_minima()
     return render_template("/home/index.html")
 
 
@@ -20,10 +22,14 @@ def table_data():
 
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
-    if data := request.json and 'temperature' in data:
+
+    #data = request.json, aplicamos walrus erator para mejorar legibildiad
+    data = request.json
+    if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
         check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
+        
         print(data)
 
         sensor_data = fetch_sensor_data()
@@ -58,6 +64,18 @@ def text_to_speech(text, lang='es'):
     tts = gTTS(text=text, lang=lang)
     tts.save("output.mp3")
     os.system("output.mp3")
+
+
+
+def obtener_temperatura_fecha_minima():
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT temperature, timestamp FROM sensor_data WHERE temperature = (SELECT MIN(temperature) FROM sensor_data)")
+        resultado = cursor.fetchone()
+    return resultado
+
+
+
 
 
 if __name__ == '__main__':
