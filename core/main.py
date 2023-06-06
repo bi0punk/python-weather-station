@@ -1,9 +1,10 @@
 from flask import Flask, request, render_template
 import datetime
-from core.db import get_db_connection
+from db import get_db_connection
 from gtts import gTTS
+from savedata import save_sensor_data
 import os
-
+from datafetch import fetch_sensor_data
 
 app = Flask(__name__)
 
@@ -26,21 +27,6 @@ def receive_sensor_data():
     else:
         return 'error'
 
-
-def save_sensor_data(temperature):
-    with get_db_connection() as conn:
-        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
-        conn.commit()
-
-
-def fetch_sensor_data():
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, temperature, timestamp FROM sensor_data")
-        sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']} for row in cursor.fetchall()]
-    return sensor_data
 
 
 def check_temperature(temperature, limit):
