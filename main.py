@@ -9,19 +9,14 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET'])
-def get_sensor_data():
-    fetch_sensor_data()
-    obtener_temperatura_fecha_minima()
-    return render_template("/home/index.html")
-
-
-@app.route('/table', methods=['GET', 'POST'])
-def table_data():
-    return render_template("/home/table.html")
+def index():
+    sensor_data = fetch_ultimos_registros(50)  # Obtener los últimos 50 registro
+    return render_template("/home/index.html", sensor_data=sensor_data)
 
 
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
+    
 
     #data = request.json, aplicamos walrus erator para mejorar legibildiad
     data = request.json
@@ -57,13 +52,7 @@ def fetch_sensor_data():
 def check_temperature(temperature, limit):
     if temperature < limit:
         text = f"Temperatura baja detectada, {limit} grados"
-        text_to_speech(text)
-
-
-def text_to_speech(text, lang='es'):
-    tts = gTTS(text=text, lang=lang)
-    tts.save("output.mp3")
-    os.system("output.mp3")
+        print(text)
 
 
 
@@ -73,6 +62,20 @@ def obtener_temperatura_fecha_minima():
         cursor.execute("SELECT temperature, timestamp FROM sensor_data WHERE temperature = (SELECT MIN(temperature) FROM sensor_data)")
         resultado = cursor.fetchone()
     return resultado
+
+
+@app.route('/ultimos_registros', methods=['GET'])
+def obtener_ultimos_registros():
+    sensor_data = fetch_ultimos_registros(50)  # Obtener los últimos 50 registros
+    return render_template("index.html", sensor_data=sensor_data)
+
+
+def fetch_ultimos_registros(num_registros):
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, temperature, timestamp FROM sensor_data ORDER BY id DESC LIMIT ?", (num_registros,))
+        sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']} for row in cursor.fetchall()]
+    return sensor_data
 
 
 
