@@ -17,17 +17,12 @@ def index():
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     
-
-    #data = request.json, aplicamos walrus erator para mejorar legibildiad
     data = request.json
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
         check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
         
-        print(data)
-
-        sensor_data = fetch_sensor_data()
         return str(temperature)
     else:
         return 'error'
@@ -53,15 +48,6 @@ def check_temperature(temperature, limit):
     if temperature < limit:
         text = f"Temperatura baja detectada, {limit} grados"
         print(text)
-
-
-
-def obtener_temperatura_fecha_minima():
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT temperature, timestamp FROM sensor_data WHERE temperature = (SELECT MIN(temperature) FROM sensor_data)")
-        resultado = cursor.fetchone()
-    return resultado
 
 
 @app.route('/ultimos_registros', methods=['GET'])
