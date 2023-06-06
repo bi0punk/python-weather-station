@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import datetime
-from db import get_db_connection
+from core.db import get_db_connection
 from gtts import gTTS
 import os
 
