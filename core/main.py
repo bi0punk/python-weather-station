@@ -16,12 +16,18 @@ def index():
 
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
-    
     data = request.json
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
+
+        print(temperature)
         save_sensor_data(temperature)
         check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
+        rounded = round(temperature)
+
+        print(f'EL valor aproximado es {rounded}')
+        print(rounded)  # Salida: 4
+
         
         return str(temperature)
     else:
