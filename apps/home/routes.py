@@ -56,12 +56,26 @@ def check_temperature(temperature, limit):
         print(text)
 
 
+
+
+
+
+
+
+
+
+
 @blueprint.route('/index')
 @login_required
 def index():
-    a = fetch_sensor_data()
+    data_temperature = fetch_sensor_data()
+    ultimo = data_temperature[-1]
+    print(type(ultimo))
+    print(type(data_temperature))
 
-    return render_template('home/index.html', segment='index', a = a)
+    print(ultimo.get('temperature'))  # Juan
+    print(ultimo.get('timestamp')) 
+    return render_template('home/index.html', segment='index', ultimo = ultimo)
 
 
 @blueprint.route('/sensor', methods=['POST'])
