@@ -1,7 +1,7 @@
 {
-  "name": "soft-ui-dashboard",
+  "name": "o",
   "version": "1.0.6",
-  "description": "Freebie Dashboard for Bootstrap 5",
+  "description": "",
   "main": "pages/dashboard.html",
   "directories": {
     "example": "root"
@@ -14,27 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/soft-ui-dashboard.git"
+    "url": "git+"
   },
   "keywords": [
-    "soft ui dashboard",
-    "bootstrap 5",
-    "dashboard",
-    "creative tim",
-    "html dashboard",
-    "html css dashboard",
-    "web dashboard",
-    "freebie",
-    "free bootstrap dashboard",
-    "css3 dashboard",
-    "bootstrap dashboard",
-    "frontend",
-    "responsive bootstrap dashboard"
+    "test"
   ],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/soft-ui-dashboard/issues"
+    "url": "testxxxxxxxxxx"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
@@ -46,5 +34,5 @@
     "gulp-sourcemaps": "^2.6.5",
     "sass": "^1.49.9"
   },
-  "homepage": "http://creative-tim.com/product/soft-ui-dashboard"
+  "homepage": ""
 }
