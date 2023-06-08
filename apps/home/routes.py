@@ -14,18 +14,18 @@ def index():
     print(type(data))
     return render_template("home/index.html") """
 
-def create_table():
+""" def create_table():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""
+    cursor.execute(""" """
         CREATE TABLE IF NOT EXISTS sensor_data (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             temperature REAL,
             timestamp TEXT
         )
-    """)
-    conn.commit()
-    conn.close()
+    """
+"""     conn.commit()
+    conn.close() """
 
 
 def get_db_connection():
