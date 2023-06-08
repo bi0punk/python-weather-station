@@ -59,8 +59,9 @@ def check_temperature(temperature, limit):
 @blueprint.route('/index')
 @login_required
 def index():
+    a = fetch_sensor_data()
 
-    return render_template('home/index.html', segment='index')
+    return render_template('home/index.html', segment='index', a = a)
 
 
 @blueprint.route('/sensor', methods=['POST'])
@@ -77,12 +78,6 @@ def receive_sensor_data():
         return str(temperature)
     else:
         return 'error'
-
-
-
-
-
-
 
 
 @blueprint.route('/index')
