@@ -22,7 +22,7 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "testxxxxxxxxxx"
+    "url": "http:"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
