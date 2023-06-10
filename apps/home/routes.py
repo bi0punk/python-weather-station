@@ -82,11 +82,6 @@ def receive_sensor_data():
         return 'error'
 
 
-""" @blueprint.route('/index')
-@login_required
-def home_index():
-    return render_template('home/index.html', segment='index') """
-
 
 @blueprint.route('/<template>')
 @login_required
