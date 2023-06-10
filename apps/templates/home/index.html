@@ -723,7 +723,7 @@
         // Realizar una solicitud AJAX a la función de Python que proporcionará los datos del gráfico
         // Puedes usar una biblioteca como jQuery para simplificar el código AJAX
         $.ajax({
-          url: "/ruta-a-tu-funcion-python",
+          url: "/ultimos100",
           type: "GET",
           dataType: "json",
           success: function (data) {
@@ -739,7 +739,7 @@
     new Chart(ctx2, {
       type: "line",
       data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: data.datasetLabel,
         datasets: [{
             label: "Mobile apps",
             tension: 0.4,
@@ -749,7 +749,7 @@
             borderWidth: 3,
             backgroundColor: gradientStroke1,
             fill: true,
-            data: [5, 10, 15, 20, 25, 30, 35, 40],
+            data: data.chartData,
             maxBarThickness: 6
           },
         ],

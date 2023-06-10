@@ -1,31 +1,11 @@
 from apps.home import blueprint
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 import datetime
 import sqlite3
 
 database = 'sensor_data.db'
-
-
-""" @blueprint.route('/', methods=['GET'])
-def index():
-    data = fetch_sensor_data()
-    print(type(data))
-    return render_template("home/index.html") """
-
-""" def create_table():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute(""" """
-        CREATE TABLE IF NOT EXISTS sensor_data (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            temperature REAL,
-            timestamp TEXT
-        )
-    """
-"""     conn.commit()
-    conn.close() """
 
 
 def get_db_connection():
@@ -50,6 +30,16 @@ def fetch_sensor_data():
     return sensor_data
 
 
+
+@blueprint.route('/ultimos100')
+@login_required
+def obtener_ultimos_registros():
+    registros = fetch_sensor_data()
+    ultimos_registros = registros[-100:]
+    return jsonify(ultimos_registros)
+
+
+
 def check_temperature(temperature, limit):
     if temperature < limit:
         text = f"Temperatura baja detectada, {limit} grados"
@@ -59,9 +49,12 @@ def check_temperature(temperature, limit):
 @blueprint.route('/index')
 @login_required
 def index():
+    data_grafico = fetch_sensor_data()
     ultimo = fetch_sensor_data()[-1]
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
+
+    print(data_grafico)
     return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event)
 
 
