@@ -6,36 +6,6 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-    <div class="container-fluid">
-
-      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('{{ config.ASSETS_ROOT }}/img/curved-images/6012933.jpg'); background-position-y: 50%;">
-        <span class="mask bg-gradient-primary opacity-6"></span>
-      </div>
-      <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Ultima Registrada</p>
-                    <h5 class="font-weight-bolder mb-0">
-                      {{temperature}}° Celsius
-                      <span class="text-success text-sm font-weight-bolder">{{date_event}}</span>
-                    </h5>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="container-fluid py-4">
 
@@ -48,7 +18,7 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Ultima Registrada</p>
                     <h5 class="font-weight-bolder mb-0">
-                      {{temperature}}° Celsius
+                      {{temperature}}°C
                       <span class="text-success text-sm font-weight-bolder">{{date_event}}</span>
                     </h5>
                   </div>
@@ -68,7 +38,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Temperatura Máxima</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Minima Histórica</p>
                     <h5 class="font-weight-bolder mb-0">
                       2,300
                       <span class="text-success text-sm font-weight-bolder">+3%</span>
@@ -90,10 +60,10 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-capitalize font-weight-bold">New Clients</p>
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Máxima Historica</p>
                     <h5 class="font-weight-bolder mb-0">
-                      ve
-                      <span class="text-danger text-sm font-weight-bolder"></span>
+                      +3,462
+                      <span class="text-danger text-sm font-weight-bolder">-2%</span>
                     </h5>
                   </div>
                 </div>
@@ -106,9 +76,31 @@
             </div>
           </div>
         </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Medio Día</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      $103,430
+                      <span class="text-success text-sm font-weight-bolder">+5%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- <div class="row mt-4">
+      <div class="row mt-4">
         <div class="col-lg-7 mb-lg-0 mb-4">
           <div class="card">
             <div class="card-body p-3">
@@ -136,21 +128,13 @@
             </div>
           </div>
         </div>
-
         <div class="col-lg-5">
           <div class="card h-100 p-3">
             <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('{{ config.ASSETS_ROOT }}/img/ivancik.jpg');">
               <span class="mask bg-gradient-dark"></span>
               <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
                 <h5 class="text-white font-weight-bolder mb-4 pt-2">Work with the rockets</h5>
-                <p class="text-white">
-                  <video width="320" height="240" controls>
-                    <source src="http://192.168.1.207:8080/video" type="video/mp4">
-                    
-                    Your browser does not support the video tag.
-                  </video>
-                  
-                </p>
+                <p class="text-white">Wealth creation is an evolutionarily recent positive-sum game. It is all about who take the opportunity first.</p>
                 <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
                   Read More
                   <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
@@ -159,10 +143,9 @@
             </div>
           </div>
         </div>
-        
-      </div> -->
+      </div>
 
-      <!-- <div class="row mt-4">
+      <div class="row mt-4">
         <div class="col-lg-5 mb-lg-0 mb-4">
           <div class="card z-index-2">
             <div class="card-body p-3">
@@ -295,7 +278,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div class="row my-4">
         <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
@@ -667,7 +650,7 @@
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "#fff",
-          data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
+          data: [450, 200, 100, 220, 500, 100, 400, 230, 500, 1000, 2000, 3000],
           maxBarThickness: 6
         }, ],
       },
@@ -735,6 +718,24 @@
     gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
     gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
 
+
+    function getChartData() {
+        // Realizar una solicitud AJAX a la función de Python que proporcionará los datos del gráfico
+        // Puedes usar una biblioteca como jQuery para simplificar el código AJAX
+        $.ajax({
+          url: "/ruta-a-tu-funcion-python",
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            // Utilizar los datos recibidos para generar el gráfico
+            createChart(data);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      }
+
     new Chart(ctx2, {
       type: "line",
       data: {
@@ -748,20 +749,7 @@
             borderWidth: 3,
             backgroundColor: gradientStroke1,
             fill: true,
-            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-            maxBarThickness: 6
-
-          },
-          {
-            label: "Websites",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            borderColor: "#575f9a",
-            borderWidth: 3,
-            backgroundColor: gradientStroke2,
-            fill: true,
-            data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+            data: [5, 10, 15, 20, 25, 30, 35, 40],
             maxBarThickness: 6
           },
         ],
