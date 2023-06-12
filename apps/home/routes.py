@@ -20,7 +20,6 @@ def save_sensor_data(temperature):
         cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
         conn.commit()
 
-
 def fetch_sensor_data():
     with get_db_connection() as conn:
         cursor = conn.cursor()
@@ -30,14 +29,12 @@ def fetch_sensor_data():
     return sensor_data
 
 
-
 @blueprint.route('/ultimos100')
 @login_required
 def obtener_ultimos_registros():
     registros = fetch_sensor_data()
     ultimos_registros = registros[-100:]
     return jsonify(ultimos_registros)
-
 
 
 def check_temperature(temperature, limit):
@@ -53,11 +50,8 @@ def index():
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
 
-    
     print(obtener_ultimos_registros)
     return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event)
-
-
 
 @blueprint.route('/sensor', methods=['POST'])
 def receive_sensor_data():
@@ -74,8 +68,6 @@ def receive_sensor_data():
     else:
         return 'error'
 
-
-
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
@@ -91,8 +83,6 @@ def route_template(template):
     except Exception:
         return render_template('home/page-500.html'), 500
 
-
-# Helper - Extract current page name from request
 def get_segment(request):
     try:
         segment = request.path.split('/')[-1]
@@ -101,15 +91,3 @@ def get_segment(request):
         return segment
     except Exception:
         return None
-
-
-
-
-
-
-
-
-
-
-
-
