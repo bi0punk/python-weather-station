@@ -1,5 +1,5 @@
 from apps.home import blueprint
-from flask import render_template, request, jsonify
+from flask import render_template, request
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 import datetime
@@ -14,34 +14,28 @@ def get_db_connection():
     return conn
 
 def save_sensor_data(temperature):
-    with get_db_connection() as conn:
-        current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
-        conn.commit()
+    conn = get_db_connection()
+    current_datetime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO sensor_data (temperature, timestamp) VALUES (?, ?)", (temperature, current_datetime))
+    conn.commit()
+    conn.close()
 
 def fetch_sensor_data():
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, temperature, timestamp FROM sensor_data")
-        sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']}
-                        for row in cursor.fetchall()]
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, temperature, timestamp FROM sensor_data")
+    sensor_data = [{'id': row['id'], 'temperature': row['temperature'], 'timestamp': row['timestamp']} for row in cursor.fetchall()]
+    conn.close()
     return sensor_data
 
-
-@blueprint.route('/ultimos100')
-@login_required
-def obtener_ultimos_registros():
-    registros = fetch_sensor_data()
-    ultimos_registros = registros[-100:]
-    return jsonify(ultimos_registros)
-
-
-def check_temperature(temperature, limit):
-    if temperature < limit:
-        text = f"Temperatura baja detectada, {limit} grados"
-        print(text)
-
+def obtener_temperatura_minima():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT MIN(temperature) FROM sensor_data")
+    temperatura_minima = cursor.fetchone()[0]
+    conn.close()
+    return temperatura_minima
 
 @blueprint.route('/index')
 @login_required
@@ -50,7 +44,6 @@ def index():
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
 
-    print(obtener_ultimos_registros)
     return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event)
 
 @blueprint.route('/sensor', methods=['POST'])
@@ -58,12 +51,10 @@ def receive_sensor_data():
     data = request.json
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
-        print(temperature)
         save_sensor_data(temperature)
-        check_temperature(temperature, 13.0)  # Cambia 18.0 por el valor límite que desees
         rounded = round(temperature)
         print(f'El valor aproximado es {rounded}')
-        print(rounded)  # Salida: 4
+        print(rounded)
         return str(temperature)
     else:
         return 'error'
