@@ -37,14 +37,19 @@ def obtener_temperatura_minima():
     conn.close()
     return temperatura_minima
 
+
+
+
+
 @blueprint.route('/index')
 @login_required
 def index():
     ultimo = fetch_sensor_data()[-1]
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
+    minima_temp = (obtener_temperatura_minima())
 
-    return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event)
+    return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event, minima_temp = minima_temp)
 
 @blueprint.route('/sensor', methods=['POST'])
 def receive_sensor_data():
