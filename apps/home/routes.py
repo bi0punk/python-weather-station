@@ -32,7 +32,7 @@ def fetch_sensor_data():
 def obtener_temperatura_minima():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT MIN(temperature) FROM sensor_data")
+    cursor.execute("SELECT timestamp, temperature FROM sensor_data WHERE temperature = (SELECT MIN(temperature) FROM sensor_data)")
     temperatura_minima = cursor.fetchone()[0]
     conn.close()
     return temperatura_minima
@@ -48,6 +48,7 @@ def index():
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
     minima_temp = (obtener_temperatura_minima())
+    print(minima_temp)
 
     return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event, minima_temp = minima_temp)
 
