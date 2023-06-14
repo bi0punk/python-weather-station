@@ -34,11 +34,9 @@ def obtener_temperatura_minima():
     cursor = conn.cursor()
     cursor.execute("SELECT timestamp, temperature FROM sensor_data WHERE temperature = (SELECT MIN(temperature) FROM sensor_data)")
     temperatura_minima = cursor.fetchone()[0]
+    aaaaaa = (cursor.fetchall)
     conn.close()
-    return temperatura_minima
-
-
-
+    return temperatura_minima, aaaaaa
 
 
 @blueprint.route('/index')
@@ -51,6 +49,20 @@ def index():
     print(minima_temp)
 
     return render_template('home/index.html', segment='index', temperature=temperature, date_event=date_event, minima_temp = minima_temp)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @blueprint.route('/sensor', methods=['POST'])
 def receive_sensor_data():
