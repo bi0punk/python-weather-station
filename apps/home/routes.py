@@ -60,10 +60,6 @@ def index():
 
 
 
-
-
-
-
 @blueprint.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     data = request.json

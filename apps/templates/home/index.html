@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                   </div>
                 </div>
               </div>
@@ -40,14 +40,14 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Minima Histórica</p>
                     <h5 class="font-weight-bolder mb-0">
-                      {{minima_temp}}°C
-                      <span class="text-success text-sm font-weight-bolder">+3%</span>
+                      {{minima_temp[0]}}°C
+                      <span class="text-success text-sm font-weight-bolder">°</span>
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                    <!-- <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i> -->
                   </div>
                 </div>
               </div>
@@ -62,14 +62,14 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Máxima Historica</p>
                     <h5 class="font-weight-bolder mb-0">
-                      +3,462
-                      <span class="text-danger text-sm font-weight-bolder">-2%</span>
+                      data
+                      <span class="text-danger text-sm font-weight-bolder">°</span>
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                    <!-- <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i> -->
                   </div>
                 </div>
               </div>
@@ -84,14 +84,14 @@
                   <div class="numbers">
                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Medio Día</p>
                     <h5 class="font-weight-bolder mb-0">
-                      $103,430
+                      data
                       <span class="text-success text-sm font-weight-bolder">°</span>
                     </h5>
                   </div>
                 </div>
                 <div class="col-4 text-end">
                   <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                    <!-- <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i> -->
                   </div>
                 </div>
               </div>
@@ -120,12 +120,8 @@
                   <div class="bg-gradient-primary border-radius-lg h-100">
                     <!-- <img src="{{ config.ASSETS_ROOT }}/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves"> -->
                     <div class="position-relative d-flex align-items-center justify-content-center h-100">
-                      <video id="videoPlayer" controls>
-                        <source src="url_del_video_en_vivo" type="video/mp4">
-                        Tu navegador no admite el elemento de video.
-                      </video>
                       
-                      <!-- <img class="w-100 position-relative z-index-2 pt-4" src="{{ config.ASSETS_ROOT }}/img/illustrations/rocket-white.png" alt="rocket"> -->
+                      <img src="http://192.168.1.230:8080/video" alt="http://192.168.1.230:8080/video" class="shrinkToFit" width="370" height="300">  
                     </div>
                   </div>
                 </div>
