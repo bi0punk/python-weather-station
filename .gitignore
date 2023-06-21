@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Databse
+sensor_data.db
+
+
 # C extensions
 *.so
 
