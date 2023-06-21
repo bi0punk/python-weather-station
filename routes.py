@@ -46,7 +46,7 @@ def index():
     temperature = ultimo.get('temperature')
     date_event = ultimo.get('timestamp')
     minima_temp = obtener_temperatura_minima()
-    return render_template('index.html', temperature=temperature, date_event=date_event, minima_temp=minima_temp)
+    return render_template('dashboard.html', temperature=temperature, date_event=date_event, minima_temp=minima_temp)
 
 
 @app.route('/sensor', methods=['POST'])
