@@ -164,7 +164,7 @@
                                             style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                                     </div>
                                 </li>
-                                <li class="ms-auto"><span class="counter text-success"> °C</span></li>
+                                <li class="ms-auto"><span class="counter text-success"> </span></li>
                             </ul>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                 success: function(response) {
                     console.log(response)
                     // Actualizar el contenido de temperature con el nuevo valor recibido
-                    $('.counter.text-success').text(response);
+                    $('.counter.text-success').text(response + ' °C');
                     /* $('.counter.text-success').text(response.temperature); */
                     /* $('.counter.text-success').text(response['temperature']); */
 
