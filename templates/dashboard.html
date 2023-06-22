@@ -251,7 +251,6 @@
     <script src="static/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
     <script src="static/js/pages/dashboards/dashboard1.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         // Función para realizar la solicitud AJAX y actualizar el dato temperature
@@ -266,16 +265,13 @@
                     $('.counter.text-success').text(response + ' °C');
                     /* $('.counter.text-success').text(response.temperature); */
                     /* $('.counter.text-success').text(response['temperature']); */
-
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
         }
-    
-        // Llamar a la función actualizarTemperature cada cierto intervalo de tiempo (por ejemplo, cada 5 segundos)
-        setInterval(actualizarTemperature, 5000); // Cambia el valor '5000' a la frecuencia de actualización deseada en milisegundos
+        setInterval(actualizarTemperature, 4000); 
     </script>
     
 
