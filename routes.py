@@ -64,4 +64,4 @@ def receive_sensor_data():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.129')
+    app.run(host='192.168.1.129', debug=True)
