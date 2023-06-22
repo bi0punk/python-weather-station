@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from jinja2 import TemplateNotFound
 import datetime
 import sqlite3
@@ -48,16 +48,22 @@ def index():
     minima_temp = obtener_temperatura_minima()
     return render_template('dashboard.html', temperature=temperature, date_event=date_event, minima_temp=minima_temp)
 
+@app.route('/data')
+def data():
+    ultimo = fetch_sensor_data()[-1]
+    temperature = ultimo.get('temperature')
+    date_event = ultimo.get('timestamp')
+    return jsonify(temperature)
+
 
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     data = request.json
+    print(data)
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
         rounded = round(temperature)
-        print(f'El valor aproximado es {rounded}')
-        print(rounded)
         return str(temperature)
     else:
         return 'error'
