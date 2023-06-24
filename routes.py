@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from jinja2 import TemplateNotFound
 import datetime
 import sqlite3
-
+from termcolor import colored
 app = Flask(__name__)
 database = 'sensor_data.db'
 
@@ -56,10 +56,12 @@ def data():
     return jsonify(temperature)
 
 
+
+
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     data = request.json
-    print(data)
+    print(colored(data['temperature'], 'blue', attrs=['bold']))
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
@@ -69,5 +71,6 @@ def receive_sensor_data():
         return 'error'
 
 
+
 if __name__ == '__main__':
-    app.run(host='192.168.1.87', debug=True)
+    app.run(host='192.168.1.104', debug=True)
