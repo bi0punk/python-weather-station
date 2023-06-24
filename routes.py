@@ -57,18 +57,19 @@ def data():
 
 
 
-
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
     data = request.json
-    print(colored(data['temperature'], 'blue', attrs=['bold']))
     if data is not None and 'temperature' in data:
         temperature = float(data['temperature'])
         save_sensor_data(temperature)
         rounded = round(temperature)
+        print(colored('temperature:', 'green', attrs=['bold']), colored(rounded, 'blue', attrs=['bold']))
         return str(temperature)
     else:
         return 'error'
+
+
 
 
 
