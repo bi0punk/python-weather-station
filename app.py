@@ -3,9 +3,44 @@ import csv
 from flask import Flask, request, render_template
 from prettytable import PrettyTable
 from colorama import init, Fore, Style
+import mysql.connector
+from mysql.connector import Error
 
 app = Flask(__name__)
 init(autoreset=True)  # Inicializa colorama para que los colores se reseteen automáticamente
+
+def save_to_csv(data, filename):
+    with open(f'data/{filename}', 'a', newline='') as csvfile:
+        fieldnames = ['Sensor', 'Temperatura (°C)', 'Humedad (%)', 'Fecha']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        if csvfile.tell() == 0:
+            writer.writeheader()
+
+        writer.writerow(data)
+
+def save_to_db(data, table_name):
+    try:
+        connection = mysql.connector.connect(
+            host='localhost',
+            database='sensor_esp',
+            user='dba_user',
+            password='DB_PASSWORD_REEMPLAZAR'
+        )
+
+        if connection.is_connected():
+            cursor = connection.cursor()
+            insert_query = f"""INSERT INTO {table_name} (fecha, temperatura, humedad) 
+                               VALUES (%s, %s, %s)"""
+            cursor.execute(insert_query, (data['Fecha'], data['Temperatura (°C)'], data['Humedad (%)']))
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return True
+
+    except Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+        return False
 
 @app.route('/datos_sensor/', methods=['POST'])
 def datos_sensor():
@@ -33,34 +68,27 @@ def datos_sensor():
         # Mostrar la tabla en la consola
         print(table)
 
-        # Guardar los datos en archivos CSV separados
-        with open('data/datos_sensor_dht22.csv', 'a', newline='') as csvfile_dht22:
-            fieldnames_dht22 = ['Sensor', 'Temperatura (°C)', 'Humedad (%)', 'Fecha']
-            writer_dht22 = csv.DictWriter(csvfile_dht22, fieldnames=fieldnames_dht22)
+        # Datos a guardar
+        data_dht22 = {
+            'Sensor': 'Exterior',
+            'Temperatura (°C)': temperatura_dht22,
+            'Humedad (%)': humedad_dht22,
+            'Fecha': fecha_hora_formateada
+        }
 
-            if csvfile_dht22.tell() == 0:
-                writer_dht22.writeheader()
+        data_dht11 = {
+            'Sensor': 'Interior',
+            'Temperatura (°C)': temperatura_dht11,
+            'Humedad (%)': humedad_dht11,
+            'Fecha': fecha_hora_formateada
+        }
 
-            writer_dht22.writerow({
-                'Sensor': 'Exterior',
-                'Temperatura (°C)': temperatura_dht22,
-                'Humedad (%)': humedad_dht22,
-                'Fecha': fecha_hora_formateada
-            })
+        # Intentar guardar en la base de datos, si falla guardar en CSV
+        if not save_to_db(data_dht22, 'datos_sensor_dht22'):
+            save_to_csv(data_dht22, 'datos_sensor_dht22_backup.csv')
 
-        with open('data/datos_sensor_dht11.csv', 'a', newline='') as csvfile_dht11:
-            fieldnames_dht11 = ['Sensor', 'Temperatura (°C)', 'Humedad (%)', 'Fecha']
-            writer_dht11 = csv.DictWriter(csvfile_dht11, fieldnames=fieldnames_dht11)
-
-            if csvfile_dht11.tell() == 0:
-                writer_dht11.writeheader()
-
-            writer_dht11.writerow({
-                'Sensor': 'Interior',
-                'Temperatura (°C)': temperatura_dht11,
-                'Humedad (%)': humedad_dht11,
-                'Fecha': fecha_hora_formateada
-            })
+        if not save_to_db(data_dht11, 'datos_sensor_dht11'):
+            save_to_csv(data_dht11, 'datos_sensor_dht11_backup.csv')
 
         return 'Datos recibidos y almacenados con éxito.'
 
