@@ -87,10 +87,11 @@ pip install -r requirements.txt
 
 ```bash
 # crea la base 'sensor_esp' e inserta (temperatura, humedad)
-python app.py              # escucha en 0.0.0.0:8000
+cp .env.example .env           # define DB_USER/DB_PASSWORD (MySQL)
+python app.py                  # escucha en 127.0.0.1:8000 (HOST/PORT configurables)
 ```
 
-> Las credenciales de MySQL están hardcodeadas en `save_to_db()`: edítalas antes de usar.
+> Las credenciales MySQL se leen de `DB_USER`/`DB_PASSWORD` (variables de entorno).
 
 **Backend SQLite (`routes.py`):**
 
